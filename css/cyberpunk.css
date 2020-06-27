@@ -11981,6 +11981,7 @@ fieldset[disabled] article.article .article-more.is-inverted:before:before {
   background: transparent;
   border: 0.5px solid #02d7f2;
   border-left: 5px solid #02d7f2;
+  letter-spacing: 0.08rem;
 }
 .footer {
   position: relative;
