@@ -6,22 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://lihui91.github.io">
-  <title>web 前端 | html篇 | SiteOfLihui</title>
+  <title>数据结构和算法面试常考题 | SiteOfLihui</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="原文地址首先这份合集源于网络， 原文地址 ，此处只是做记笔记的作用   页面导入样式时，使用 link 和 @import 有什么区别。1、从属关系区别。@import 只能导入样式表，link 还可以定义 RSS、rel 连接属性、引入网站图标等；2、加载顺序区别；加载页面时，link 标签引入的 CSS 被同时加载；@import 引入的 CSS 将在页面加载完毕后被加载；3、兼容性区别；">
+  <meta name="description" content="1、请说一说你理解的Stack Overflow，并举个简单例子导致栈溢出。栈溢出概念：栈溢出指的是程序向栈中某个变量中写入的字节数超过了这个变量本身申请的字节数，因而导致栈中与其相邻的变量的值被改变。栈溢出的原因：1、局部数组过大。当函数内部的数组过大时，有可能导致堆栈溢出。局部变量是存储在栈当中的。解决这个问题的办法有两个，一是增大栈空间，二是改用动态分配，使用堆而不是栈。2、递归调用次数太多">
 <meta property="og:type" content="article">
-<meta property="og:title" content="web 前端 | html篇">
-<meta property="og:url" content="https://lihui91.github.io/2021/03/13/web_collect/index.html">
+<meta property="og:title" content="数据结构和算法面试常考题">
+<meta property="og:url" content="https://lihui91.github.io/2021/03/14/datastructure-algrithm/index.html">
 <meta property="og:site_name" content="SiteOfLihui">
-<meta property="og:description" content="原文地址首先这份合集源于网络， 原文地址 ，此处只是做记笔记的作用   页面导入样式时，使用 link 和 @import 有什么区别。1、从属关系区别。@import 只能导入样式表，link 还可以定义 RSS、rel 连接属性、引入网站图标等；2、加载顺序区别；加载页面时，link 标签引入的 CSS 被同时加载；@import 引入的 CSS 将在页面加载完毕后被加载；3、兼容性区别；">
+<meta property="og:description" content="1、请说一说你理解的Stack Overflow，并举个简单例子导致栈溢出。栈溢出概念：栈溢出指的是程序向栈中某个变量中写入的字节数超过了这个变量本身申请的字节数，因而导致栈中与其相邻的变量的值被改变。栈溢出的原因：1、局部数组过大。当函数内部的数组过大时，有可能导致堆栈溢出。局部变量是存储在栈当中的。解决这个问题的办法有两个，一是增大栈空间，二是改用动态分配，使用堆而不是栈。2、递归调用次数太多">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-13T04:12:56.000Z">
-<meta property="article:modified_time" content="2021-04-17T01:36:54.084Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006HZNuggy1gocebebr4bj30mv0byn3d.jpg">
+<meta property="article:published_time" content="2021-03-14T05:39:56.000Z">
+<meta property="article:modified_time" content="2021-04-17T02:38:08.207Z">
 <meta property="article:author" content="‘Lihui’">
-<meta property="article:tag" content="web">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006HZNuggy1gocebebr4bj30mv0byn3d.jpg">
   
     <link rel="alternative" href="/atom.xml" title="SiteOfLihui" type="application/atom+xml">
   
@@ -204,14 +207,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-web_collect" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-datastructure-algrithm" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      web 前端 | html篇
+      数据结构和算法面试常考题
     </h1>
   
 
@@ -223,8 +226,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2021/03/13/web_collect/" class="archive-article-date">
-        <time datetime="2021-03-13T04:12:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-13</time>
+<a href="/2021/03/14/datastructure-algrithm/" class="archive-article-date">
+        <time datetime="2021-03-14T05:39:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-14</time>
 </a>
 
   
@@ -237,7 +240,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">686字</span>
+      <span class="post-count">2.4k字</span>
     </span>
   </span>
 
@@ -246,7 +249,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">2分</span>
+      <span class="post-count">9分</span>
     </span>
   </span>
 </div>
@@ -257,22 +260,53 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h2 id="原文地址"><a href="#原文地址" class="headerlink" title="原文地址"></a>原文地址</h2><p>首先这份合集源于网络， <a href="https://segmentfault.com/a/1190000021966814" target="_blank" rel="noopener">原文地址</a> ，此处只是做记笔记的作用  </p>
-<h2 id="页面导入样式时，使用-link-和-import-有什么区别。"><a href="#页面导入样式时，使用-link-和-import-有什么区别。" class="headerlink" title="页面导入样式时，使用 link 和 @import 有什么区别。"></a>页面导入样式时，使用 link 和 @import 有什么区别。</h2><p>1、从属关系区别。@import 只能导入样式表，link 还可以定义 RSS、rel 连接属性、引入网站图标等；<br>2、加载顺序区别；加载页面时，link 标签引入的 CSS 被同时加载；@import 引入的 CSS 将在页面加载完毕后被加载；<br>3、兼容性区别；  </p>
+    <h2 id="1、请说一说你理解的Stack-Overflow，并举个简单例子导致栈溢出。"><a href="#1、请说一说你理解的Stack-Overflow，并举个简单例子导致栈溢出。" class="headerlink" title="1、请说一说你理解的Stack Overflow，并举个简单例子导致栈溢出。"></a>1、请说一说你理解的Stack Overflow，并举个简单例子导致栈溢出。</h2><p><strong>栈溢出概念：</strong><br>栈溢出指的是程序向栈中某个变量中写入的字节数超过了这个变量本身申请的字节数，因而导致栈中与其相邻的变量的值被改变。<br><strong>栈溢出的原因：</strong><br>1、局部数组过大。当函数内部的数组过大时，有可能导致堆栈溢出。局部变量是存储在栈当中的。解决这个问题的办法有两个，一是增大栈空间，二是改用动态分配，使用堆而不是栈。<br>2、递归调用次数太多。递归函数在运行时会进行压栈操作，当压栈次数太多时，也会导致堆栈溢出。<br>3、指针或数组越界。这种情况最常见，例如进行字符串拷贝，或处理用户输入等。  </p>
 <a id="more"></a>
-<h2 id="常见浏览器内核"><a href="#常见浏览器内核" class="headerlink" title="常见浏览器内核"></a>常见浏览器内核</h2><ul>
-<li><strong>内核</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Trident：IE 浏览器内核；</span><br><span class="line">Gecko：Firefox 浏览器内核；</span><br><span class="line">Presto：Opera 浏览器内核；</span><br><span class="line">Webkit：Safari 浏览器内核；</span><br><span class="line">Blink：谷歌浏览器内核，属于 Webkit 的一个分支，与 Opera 一起在研发；</span><br></pre></td></tr></table></figure></li>
-<li><strong>浏览器</strong>  </li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">IE：Trident，IE 内核；</span><br><span class="line">Chrome：以前是 Webkit，现在是 Blink 内核；</span><br><span class="line">Firefox：Gecko 内核；</span><br><span class="line">Safari：Webkit 内核；</span><br><span class="line">Opera：一起是 Presto，现在是 Blink 内核；</span><br><span class="line">360、猎豹浏览器内核：IE + Blink 双内核；</span><br><span class="line">搜狗、遨游、QQ 浏览器内核：Trident（兼容模式）+ Webkit（高速模式）；</span><br><span class="line">百度浏览器、世界之窗内核：IE 内核；</span><br><span class="line">2345 浏览器：以前是 IE 内核，现在是 IE + Blink 双内核；</span><br><span class="line">UC 浏览器内核：Webkit + Trident；</span><br></pre></td></tr></table></figure>
+<p><strong>栈溢出例子：</strong>  </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line">int main(int argc, char* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	char buf[256];</span><br><span class="line">	strcpy_s(buf, argv[1]);</span><br><span class="line">	printf(&quot;input:%s\n&quot;, buf);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="浏览器的渲染原理"><a href="#浏览器的渲染原理" class="headerlink" title="浏览器的渲染原理"></a>浏览器的渲染原理</h2><pre><code>1、首先解析收到的文档，根据文档定义构建一颗 DOM 树，DOM 树是由 DOM 元素及属性节点组成的；  
-2、然后对 CSS 进行解析，生成 CSSOM 规则树；   
-3、根据 DOM 树和 CSSOM 规则树构建 Render Tree。渲染树的节点被称为渲染对象，渲染对象是一个包含有颜色和大小等属性的矩形，渲染对象和 DOM 对象相对应，但这种对应关系不是一对一的，不可见的 DOM 元素不会被插入渲染树。   
-4、当渲染对象被创建并添加到树中，它们并没有位置和大小，所以当浏览器生成渲染树以后，就会根据渲染树来进行布局（也可以叫做回流）。这一阶段浏览器要做的事情就是要弄清楚各个节点在页面中的确切位置和大小。通常这一行为也被称为“自动重排”。   
-5、布局阶段结束后是绘制阶段，比那里渲染树并调用对象的 paint 方法将它们的内容显示在屏幕上，绘制使用 UI 基础组件。  &lt;br&gt;
-为了更好的用户体验，渲染引擎会尽可能早的将内容呈现到屏幕上，并不会等到所有的 html 解析完成之后再去构建和布局 render tree。它是解析完一部分内容就显示一部分内容，同时可能还在网络下载其余内容。
-</code></pre>
+<p>上述代码 <strong>strcpy_s(buf, argv[1]);</strong> 发生了缓冲区溢出错误，因为原缓冲区内容是用户输入的。  </p>
+<h2 id="2、请你说一下堆和栈的区别，以及为什么栈要快？"><a href="#2、请你说一下堆和栈的区别，以及为什么栈要快？" class="headerlink" title="2、请你说一下堆和栈的区别，以及为什么栈要快？"></a>2、请你说一下堆和栈的区别，以及为什么栈要快？</h2><blockquote>
+<p><strong>堆和栈的区别：</strong><br>堆是由低地址向高地址扩展；栈是由高地址向低地址扩展。<br>堆中的内存需要手动申请和手动释放，栈中内存时由OS自动申请和自动释放，存放着参数，局部变量等内存。<br>堆中频繁调用malloc和free，会产生内存碎片，降低程序效率；而战由于其先进后出的特性，不会产生内存碎片<br>堆的分配效率较低，而栈的分配效率较高。  </p>
+</blockquote>
+<blockquote>
+<p><strong>栈的效率高的原因：</strong><br>栈是操作系统提供的数据结构，计算机底层对栈提供了一系列支持：分配专门的寄存器存储栈的地址，压栈和入栈有专门的指令执行；而堆是由C/C++函数库提供的，机制复杂，需要一系列内存分配、合并内存和释放内存的算法，因此效率较低。  </p>
+</blockquote>
+<h2 id="3、请你说一说小根堆特点？"><a href="#3、请你说一说小根堆特点？" class="headerlink" title="3、请你说一说小根堆特点？"></a>3、请你说一说小根堆特点？</h2><p>堆是一棵完全二叉树(如果一共有h层,那么1~h-1层均满，在h层可能会连续缺失若干个右叶子)。<br><strong>1)小根堆</strong><br>若根节点存在左子女则根节点的值小于左子女的值;若根节点存在右子女则根节点的值小于右子女的值。<br><strong>2)大根堆</strong><br>若根节点存在左子女则根节点的值大于左子女的值;若根节点存在右子女则根节点的值大于右子女的值。  </p>
+<h2 id="4、手写代码，两个栈实现一个队列。"><a href="#4、手写代码，两个栈实现一个队列。" class="headerlink" title="4、手写代码，两个栈实现一个队列。"></a>4、手写代码，两个栈实现一个队列。</h2><p>参考代码：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class Solution&#123;</span><br><span class="line">public:</span><br><span class="line">void push(int node)</span><br><span class="line">&#123;</span><br><span class="line">    stack1.push(node);</span><br><span class="line">&#125;</span><br><span class="line">int pop()&#123;</span><br><span class="line">if(stack2.size()!&#x3D;O)</span><br><span class="line">&#123;</span><br><span class="line">    int tmp &#x3D; stack2.top();</span><br><span class="line">    tack2.pop();</span><br><span class="line">    return tmp;&#125;</span><br><span class="line">    else&#123;</span><br><span class="line">    while(stack1.size()!&#x3D;0)</span><br><span class="line">    &#123;</span><br><span class="line">        int tmp &#x3D; stack1.top();</span><br><span class="line">        stack1.pop();</span><br><span class="line">        stack2.push(tmp);&#125;</span><br><span class="line">        return pop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">private:</span><br><span class="line">stack&lt;int&gt; stack1;</span><br><span class="line">stack&lt;int&gt; stack2;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="5、请你来说一下堆和栈的区别"><a href="#5、请你来说一下堆和栈的区别" class="headerlink" title="5、请你来说一下堆和栈的区别."></a>5、请你来说一下堆和栈的区别.</h2><p><strong>1)申请方式:</strong><br>栈由系统自动分配和管理,堆由程序员手动分配和管理。<br><strong>2)效率:</strong><br>栈由系统分配，速度快,不会有内存碎片。<br>堆由程序员分配,速度较慢，可能由于操作不当产生内存碎片。<br><strong>3)扩展方向</strong><br>栈从高地址向低地址进行扩展,堆由低地址向高地址进行扩展。<br>4)程序局部变量是使用的栈空间，new/malloc动态申请的内存是堆空间,函数调用时会进行形参和返回值的压栈出栈，也是用的栈空间。  </p>
+<h2 id="6、请问快排的时间复杂度最差是多少-什么时候时间最差"><a href="#6、请问快排的时间复杂度最差是多少-什么时候时间最差" class="headerlink" title="6、请问快排的时间复杂度最差是多少?什么时候时间最差?"></a>6、请问快排的时间复杂度最差是多少?什么时候时间最差?</h2><p>O(N^2)，元素本来倒序排列用时最多。  </p>
+<h2 id="7、请问稳定排序有几种？"><a href="#7、请问稳定排序有几种？" class="headerlink" title="7、请问稳定排序有几种？"></a>7、请问稳定排序有几种？</h2><p>基数排序、冒泡排序、直接插入排序、折半插入排序、归并排序</p>
+<h2 id="8、请你来手写一下快排的代码。"><a href="#8、请你来手写一下快排的代码。" class="headerlink" title="8、请你来手写一下快排的代码。"></a>8、请你来手写一下快排的代码。</h2><p>参考代码:</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#define N 6</span><br><span class="line"></span><br><span class="line">int partition(int arr[], int low, int high)&#123;</span><br><span class="line">    int key;</span><br><span class="line">    key &#x3D; arr[low];</span><br><span class="line">    while(low&lt;high)&#123;</span><br><span class="line">        while(low &lt;high &amp;&amp; arr[high]&gt;&#x3D; key )</span><br><span class="line">            high--;</span><br><span class="line">        if(low&lt;high)</span><br><span class="line">            arr[low++] &#x3D; arr[high];</span><br><span class="line">        while( low&lt;high &amp;&amp; arr[low]&lt;&#x3D;key )</span><br><span class="line">            low++;</span><br><span class="line">        if(low&lt;high)</span><br><span class="line">            arr[high--] &#x3D; arr[low];</span><br><span class="line">    &#125;</span><br><span class="line">    arr[low] &#x3D; key;</span><br><span class="line"></span><br><span class="line">    return low;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void quick_sort(int arr[], int start, int end)&#123;</span><br><span class="line">    int pos;</span><br><span class="line">    if (start&lt;end)&#123;</span><br><span class="line">        pos &#x3D; partition(arr, start, end);</span><br><span class="line">        quick_sort(arr,start,pos-1);</span><br><span class="line">        quick_sort(arr,pos+1,end);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(void)&#123;</span><br><span class="line">    int i;</span><br><span class="line">    int arr[N]&#x3D;&#123;32,12,7, 78, 23,45&#125;;</span><br><span class="line"></span><br><span class="line">    printf(&quot;排序前 \n&quot;);</span><br><span class="line">    for(i&#x3D;0;i&lt;N;i++)</span><br><span class="line">        printf(&quot;%d\t&quot;,arr[i]);</span><br><span class="line">    quick_sort(arr,0,N-1);</span><br><span class="line"></span><br><span class="line">    printf(&quot;\n 排序后 \n&quot;);</span><br><span class="line">    for(i&#x3D;0; i&lt;N; i++)</span><br><span class="line">        printf(&quot;%d\t&quot;, arr[i]);</span><br><span class="line">    printf (&quot;\n&quot;);</span><br><span class="line"></span><br><span class="line">    system(&quot;pause&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="9、请问求第k大的数的方法以及各自的复杂度是怎样的，另外追问一下，当有相同元素时-还可以使用什么不同的方法求第k大的元素？"><a href="#9、请问求第k大的数的方法以及各自的复杂度是怎样的，另外追问一下，当有相同元素时-还可以使用什么不同的方法求第k大的元素？" class="headerlink" title="9、请问求第k大的数的方法以及各自的复杂度是怎样的，另外追问一下，当有相同元素时,还可以使用什么不同的方法求第k大的元素？"></a>9、请问求第k大的数的方法以及各自的复杂度是怎样的，另外追问一下，当有相同元素时,还可以使用什么不同的方法求第k大的元素？</h2><p>首先使用快速排序算法将数组按照从大到小排序,然后取第k个,其时间复杂度最快为0(nlogn)<br>使用堆排序，建立最大堆,然后调整堆,知道获得第k个元素,其时间复杂度为O(n+klogn)<br>首先利用哈希表统计数组中个元素出现的次数，然后利用计数排序的思想,线性从大到小扫描过程中,前面有k-1个数则为第k大的数<br>利用快排思想，从数组中随机选择一个数i,然后将数组分成两部分Dl,Dr，Dl的元素都小于i,Dr的元素都大于i。然后统计Dr元素个数，如果Dr元素个数等于k-1,那么第k大的数即为k，如果Dr元素个数小于k,那么继续求Dl中第k-Dr大的元素;如果Dr元素个数大于k,那么继续求Dr中第k大的元素<br>当有相同元素的时候：<br>首先利用哈希表统计数组中个元素出现的次数,然后利用计数排序的思想，线性从大到小扫描过程中,前面有k-1个数则为第k大的数，平均情况下时间复杂度为O(n)  </p>
+<h2 id="10、请你来介绍一下各种排序算法及时间复杂度"><a href="#10、请你来介绍一下各种排序算法及时间复杂度" class="headerlink" title="10、请你来介绍一下各种排序算法及时间复杂度"></a>10、请你来介绍一下各种排序算法及时间复杂度</h2><blockquote>
+<p>插入排序:<br>对于一个带排序数组来说，其初始有序数组元素个数为1，然后从第二个元素,插入到有序数组中。对于每一次插入操作，从后往前遍历当前有序数组，如果当前元素大于要插入的元素，则后移一位;如果当前元素小于或等于要插入的元素，则将要插入的元素插入到当前元素的下一位中。 </p>
+</blockquote>
+<blockquote>
+<p>希尔排序:<br>先将整个待排序记录分割成若干子序列,然后分别进行直接插入排序,待整个序列中的记录基本有序时,在对全体记录进行一次直接插入排序。其子序列的构成不是简单的逐段分割,而是将每隔某个增量的记录组成一个子序列。希尔排序时间复杂度与增量序列的选取有关，其最后一个值必须为1. </p>
+</blockquote>
+<blockquote>
+<p>归并排序:<br>该算法采用分治法;对于包含m个元素的待排序序列,将其看成m个长度为1的子序列。然后两两合归并，得到n/2个长度为2或者1的有序子序列;然后再两两归并,直到得到1个长度为m的有序序列。  </p>
+</blockquote>
+<blockquote>
+<p>冒泡排序:<br>对于包含n个元素的带排序数组，重复遍历数组，首先比较第一个和第二个元素，若为逆序，则交换元素位置;然后比较第二个和第三个元素，重复上述过程。每次遍历会把当前前n-i个元素中的最大的元素移到n-i位置。遍历n次,完成排序。  </p>
+</blockquote>
+<blockquote>
+<p>快速排序:<br>通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序,整个排序过程可以递归进行，以此达到整个数据变成有序序列。  </p>
+</blockquote>
+<blockquote>
+<p>选择排序:<br>每次循环，选择当前无序数组中最小的那个元素,然后将其与无序数组的第一个元素交换位置，从而使有序数组元素加1，无序数组元素减1.初始时无序数组为空。</p>
+</blockquote>
+<blockquote>
+<p>堆排序:<br>堆排序是一种选择排序，利用堆这种数据结构来完成选择。其算法思想是将带排序数据构造一个最大堆(升序)/最小堆(降序)，然后将堆顶元素与待排序数组的最后一个元素交换位置，此时末尾元素就是最大/最小的值。然后将剩余n-1个元素重新构造成最大堆/最小堆。<br>各个排序算法的时空复杂度以及稳定性如下表：</p>
+</blockquote>
+<div align="center"><img src="http://ww1.sinaimg.cn/large/006HZNuggy1gocebebr4bj30mv0byn3d.jpg" width="80%"/></div> 
+
 
     
 
@@ -319,7 +353,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://lihui91.github.io/2021/03/13/web_collect/" title="web 前端 | html篇" target="_blank">https://lihui91.github.io/2021/03/13/web_collect/</a>
+          <a href="https://lihui91.github.io/2021/03/14/datastructure-algrithm/" title="数据结构和算法面试常考题" target="_blank">https://lihui91.github.io/2021/03/14/datastructure-algrithm/</a>
         </li>
         
         <li>
@@ -335,13 +369,22 @@
   </div>
   <div class="article-info article-info-index">
     
+    <div class="article-pop-out tagcloud">
+      <i class="icon-tuding"></i>
+      <a class="article-tag-list-link color3">置顶</a>
+    </div>
+    
     
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
         		</li>
       		
 		</ul>
@@ -408,7 +451,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://lihui91.github.io/2021/03/13/web_collect/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://lihui91.github.io/2021/03/14/datastructure-algrithm/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -423,18 +466,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2021/03/13/front_end_1/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/03/16/Zijie-Yimian/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          捡拾前端知识点1
+          记录字节一面
         
       </div>
     </a>
   
   
-    <a href="/2021/03/12/nowcoder_sort/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">已经不会了的排序orz</div>
+    <a href="/2021/03/13/front-end-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">捡拾前端知识点1</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -596,19 +639,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">web</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -616,11 +651,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">踩坑日常</a>
+                <a href="javascript:void(0)" class="js-tag color4">服务端</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -628,11 +659,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">服务端</a>
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">好图</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -644,11 +675,23 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">踩坑日常</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">好图</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">matlab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
