@@ -206,7 +206,7 @@
             
 
   
-    <article id="post-datastructure-algrithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-backend-cpp-perf-analyse" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -214,7 +214,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/2021/03/14/datastructure-algrithm/" target="_blank">数据结构和算法面试常考题</a>
+	  <a class="article-title" href="/2024/07/28/backend-cpp-perf-analyse/" target="_blank">Perf性能分析</a>
   
     </h1>
   
@@ -222,8 +222,8 @@
 
   
   
-<a href="/2021/03/14/datastructure-algrithm/" class="archive-article-date">
-        <time datetime="2021-03-14T05:39:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-14</time>
+<a href="/2024/07/28/backend-cpp-perf-analyse/" class="archive-article-date">
+        <time datetime="2024-07-27T16:30:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-28</time>
 </a>
 
   
@@ -235,10 +235,35 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h2 id="1、请说一说你理解的Stack-Overflow，并举个简单例子导致栈溢出。"><a href="#1、请说一说你理解的Stack-Overflow，并举个简单例子导致栈溢出。" class="headerlink" title="1、请说一说你理解的Stack Overflow，并举个简单例子导致栈溢出。"></a>1、请说一说你理解的Stack Overflow，并举个简单例子导致栈溢出。</h2><p><strong>栈溢出概念：</strong><br>栈溢出指的是程序向栈中某个变量中写入的字节数超过了这个变量本身申请的字节数，因而导致栈中与其相邻的变量的值被改变。<br><strong>栈溢出的原因：</strong><br>1、局部数组过大。当函数内部的数组过大时，有可能导致堆栈溢出。局部变量是存储在栈当中的。解决这个问题的办法有两个，一是增大栈空间，二是改用动态分配，使用堆而不是栈。<br>2、递归调用次数太多。递归函数在运行时会进行压栈操作，当压栈次数太多时，也会导致堆栈溢出。<br>3、指针或数组越界。这种情况最常见，例如进行字符串拷贝，或处理用户输入等。  </p>
-    
-    <a class="article-more-a" href="/2021/03/14/datastructure-algrithm/#more">more >></a>
-    
+    <h1 id="perf"><a href="#perf" class="headerlink" title="perf"></a>perf</h1><p>Linux平台专属，以下内容基于CentOS<br>快速找出性能瓶颈和优化点</p>
+<h2 id="1-安装perf"><a href="#1-安装perf" class="headerlink" title="1. 安装perf"></a>1. 安装perf</h2><h3 id="Ubuntu系统"><a href="#Ubuntu系统" class="headerlink" title="Ubuntu系统"></a>Ubuntu系统</h3><p>sudo apt-get install linux-tools-common linux-tools-generic linux-tools-<code>uname -r</code></p>
+<h3 id="Centos系统"><a href="#Centos系统" class="headerlink" title="Centos系统"></a>Centos系统</h3><p>yum install -y perf</p>
+<h2 id="2-查看perf版本"><a href="#2-查看perf版本" class="headerlink" title="2. 查看perf版本"></a>2. 查看perf版本</h2><p>$ perf –version<br>perf version 5.4.44</p>
+<h2 id="3-测试代码"><a href="#3-测试代码" class="headerlink" title="3. 测试代码"></a>3. 测试代码</h2><p>#include &lt;stdio.h&gt;<br>#include &lt;stdlib.h&gt;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">long_test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">1000000</span>; i++) j = i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) long_test();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) long_test();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    foo1();</span><br><span class="line">    foo2();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>编译成二进制文件<br><code>g++ -o test test.cpp</code><h2 id="4-使用perf对系统-CPU-事件做采样"><a href="#4-使用perf对系统-CPU-事件做采样" class="headerlink" title="4. 使用perf对系统 CPU 事件做采样"></a>4. 使用perf对系统 CPU 事件做采样</h2>采样60s，会生成一个perf.data文件<h3 id="方式一：对一个正在运行的进程，进行采样"><a href="#方式一：对一个正在运行的进程，进行采样" class="headerlink" title="方式一：对一个正在运行的进程，进行采样"></a>方式一：对一个正在运行的进程，进行采样</h3><code>perf record -p PID -g -- sleep 60</code></li>
+</ul>
+<h3 id="方式二：全新运行一个二进制文件main，进行采样"><a href="#方式二：全新运行一个二进制文件main，进行采样" class="headerlink" title="方式二：全新运行一个二进制文件main，进行采样"></a>方式二：全新运行一个二进制文件main，进行采样</h3><p><code>sudo perf record -F 99 -g ./main -- sleep 60</code></p>
+<h2 id="5-生成火焰图"><a href="#5-生成火焰图" class="headerlink" title="5. 生成火焰图"></a>5. 生成火焰图</h2><p>利用这个开源工具可以将报告生成可视化的svg图片，更容易查看对应的CPU开销时间和调用栈深度。<br>git clone –depth 1 <a href="https://github.com/brendangregg/FlameGraph.git" target="_blank" rel="noopener">https://github.com/brendangregg/FlameGraph.git</a></p>
+<h3 id="安装perl"><a href="#安装perl" class="headerlink" title="安装perl"></a>安装perl</h3><p><code>yum install -y perl</code></p>
+<h4 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h4><p><code>apt install  -y perl</code><br>生成火焰图的脚本<br>对二进制文件main进行10秒的采样，然后生成火焰图<br>非root用户需要加sudo</p>
+<blockquote>
+<p>perf record -g ./main  sleep 10<br>perf script -i perf.data &amp;&gt; perf.unfold<br>./FlameGraph/stackcollapse-perf.pl perf.unfold &amp;&gt; perf.folded<br>./FlameGraph/flamegraph.pl perf.folded &gt; perf.svg</p>
+</blockquote>
+<h2 id="6-将火焰图从docker中导出到本地"><a href="#6-将火焰图从docker中导出到本地" class="headerlink" title="6. 将火焰图从docker中导出到本地"></a>6. 将火焰图从docker中导出到本地</h2><p>docker cp 3cf72755eea5:/home/tmp/perf.svg /Users/lihui/Desktop</p>
+<h2 id="7-参考博客"><a href="#7-参考博客" class="headerlink" title="7. 参考博客"></a>7. 参考博客</h2><ul>
+<li>perf的基本使用方法</li>
+<li>博客</li>
+<li>阮一峰-如何读懂火焰图？<h2 id="8-从火焰图可以获得的信息"><a href="#8-从火焰图可以获得的信息" class="headerlink" title="8. 从火焰图可以获得的信息"></a>8. 从火焰图可以获得的信息</h2></li>
+<li>调用栈从下往上，下层为父类，上层为子类。</li>
+<li>点击父类缩小，点击子类放大。</li>
+<li>只关注自己实现的函数名，忽略标准库中的函数。</li>
+<li>总结一下，火焰图的宽度用于比较不同函数或代码路径的性能，而高度用于显示函数调用堆栈的深度。<h2 id="9-生成火焰图常见问题"><a href="#9-生成火焰图常见问题" class="headerlink" title="9. 生成火焰图常见问题"></a>9. 生成火焰图常见问题</h2></li>
+<li>没有加root权限</li>
+</ul>
+
     
 
     
@@ -248,22 +273,13 @@
   </div>
   <div class="article-info article-info-index">
     
-    <div class="article-pop-out tagcloud">
-      <i class="icon-tuding"></i>
-      <a class="article-tag-list-link color3">置顶</a>
-    </div>
-    
     
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
         		</li>
       		
 		</ul>
@@ -284,7 +300,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2021/03/14/datastructure-algrithm/">展开全文 >></a>
+      <a class="article-more-a" href="/2024/07/28/backend-cpp-perf-analyse/">展开全文 >></a>
     </p>
     
 
@@ -314,7 +330,7 @@
 
 
   
-    <article id="post-two-github-accounts" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-git-two-github-accounts" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -322,7 +338,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/2024/06/09/two-github-accounts/" target="_blank">github 多账户配置</a>
+	  <a class="article-title" href="/2024/06/09/git-two-github-accounts/" target="_blank">github 多账户配置</a>
   
     </h1>
   
@@ -330,7 +346,7 @@
 
   
   
-<a href="/2024/06/09/two-github-accounts/" class="archive-article-date">
+<a href="/2024/06/09/git-two-github-accounts/" class="archive-article-date">
         <time datetime="2024-06-09T08:39:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-06-09</time>
 </a>
 
@@ -347,18 +363,9 @@
 <p>我现在使用的方案：</p>
 <h2 id="SSH-Key-配置"><a href="#SSH-Key-配置" class="headerlink" title="SSH Key 配置"></a>SSH Key 配置</h2><p>通过为每个 GitHub 账号生成和配置不同的 SSH 密钥，可以在同一个用户环境下同时使用多个账号。</p>
 <h4 id="1-生成多个-SSH-密钥："><a href="#1-生成多个-SSH-密钥：" class="headerlink" title="1. 生成多个 SSH 密钥："></a>1. 生成多个 SSH 密钥：</h4><p>为每个 GitHub 账号生成一个单独的 SSH 密钥。例如，一个用于工作，一个用于个人项目。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">"your_email@domain.com"</span> -f ~/.ssh/id_rsa_github_work</span><br><span class="line">ssh-keygen -t rsa -C <span class="string">"your_other_email@domain.com"</span> -f ~/.ssh/id_rsa_github_personal</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-配置-SSH-Config-文件："><a href="#2-配置-SSH-Config-文件：" class="headerlink" title="2. 配置 SSH Config 文件："></a>2. 配置 SSH Config 文件：</h4><p>编辑 ~/.ssh/config 文件，添加如下内容，将密钥文件和 GitHub 主机关联起来。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 工作账户</span></span><br><span class="line">Host github-work</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_rsa_github_work</span><br><span class="line"></span><br><span class="line"><span class="comment"># 个人账户</span></span><br><span class="line">Host github-personal</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_rsa_github_personal</span><br></pre></td></tr></table></figure>
-
-
-<p>多个github 账号，那么本地用户名和邮箱怎么设置?</p>
-<h2 id="使用-Git-别名切换配置"><a href="#使用-Git-别名切换配置" class="headerlink" title="使用 Git 别名切换配置"></a>使用 Git 别名切换配置</h2><h4 id="创建一个脚本（可选）："><a href="#创建一个脚本（可选）：" class="headerlink" title="创建一个脚本（可选）："></a>创建一个脚本（可选）：</h4><p>创建一个脚本 switch-git-config.sh 来切换配置：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$1</span>"</span> == <span class="string">"work"</span> ]; <span class="keyword">then</span></span><br><span class="line">    git config --global user.name <span class="string">"WorkUsername"</span></span><br><span class="line">    git config --global user.email <span class="string">"work_email@domain.com"</span></span><br><span class="line"><span class="keyword">elif</span> [ <span class="string">"<span class="variable">$1</span>"</span> == <span class="string">"personal"</span> ]; <span class="keyword">then</span></span><br><span class="line">    git config --global user.name <span class="string">"PersonalUsername"</span></span><br><span class="line">    git config --global user.email <span class="string">"personal_email@domain.com"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Usage: switch-git-config.sh [work|personal]"</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-
-<p>使用脚本切换配置：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./switch-git-config.sh work</span><br></pre></td></tr></table></figure>
+    
+    <a class="article-more-a" href="/2024/06/09/git-two-github-accounts/#more">more >></a>
+    
     
 
     
@@ -395,7 +402,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2024/06/09/two-github-accounts/">展开全文 >></a>
+      <a class="article-more-a" href="/2024/06/09/git-two-github-accounts/">展开全文 >></a>
     </p>
     
 
@@ -425,7 +432,7 @@
 
 
   
-    <article id="post-solid-fundation-datastructure-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-algorithm-datastructure-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -433,7 +440,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/2021/09/21/solid-fundation-datastructure-1/" target="_blank">数据结构算法背诵</a>
+	  <a class="article-title" href="/2021/09/21/algorithm-datastructure-1/" target="_blank">数据结构算法背诵</a>
   
     </h1>
   
@@ -441,7 +448,7 @@
 
   
   
-<a href="/2021/09/21/solid-fundation-datastructure-1/" class="archive-article-date">
+<a href="/2021/09/21/algorithm-datastructure-1/" class="archive-article-date">
         <time datetime="2021-09-21T09:05:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-21</time>
 </a>
 
@@ -457,7 +464,7 @@
     <h2 id="一、线性表"><a href="#一、线性表" class="headerlink" title="一、线性表"></a>一、线性表</h2><hr>
 <h3 id="1-逆转顺序表中的所有元素"><a href="#1-逆转顺序表中的所有元素" class="headerlink" title="1.逆转顺序表中的所有元素"></a>1.逆转顺序表中的所有元素</h3><p>算法思想：第一个元素和最后一个元素对调，第二个元素和倒数第二个元素对调…以此类推  </p>
     
-    <a class="article-more-a" href="/2021/09/21/solid-fundation-datastructure-1/#more">more >></a>
+    <a class="article-more-a" href="/2021/09/21/algorithm-datastructure-1/#more">more >></a>
     
     
 
@@ -484,7 +491,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2021/09/21/solid-fundation-datastructure-1/">展开全文 >></a>
+      <a class="article-more-a" href="/2021/09/21/algorithm-datastructure-1/">展开全文 >></a>
     </p>
     
 
@@ -514,7 +521,7 @@
 
 
   
-    <article id="post-git-err" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-git-git-err" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -522,7 +529,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/2021/09/13/git-err/" target="_blank">git 碰到的一些问题</a>
+	  <a class="article-title" href="/2021/09/13/git-git-err/" target="_blank">git 碰到的一些问题</a>
   
     </h1>
   
@@ -530,7 +537,7 @@
 
   
   
-<a href="/2021/09/13/git-err/" class="archive-article-date">
+<a href="/2021/09/13/git-git-err/" class="archive-article-date">
         <time datetime="2021-09-13T07:39:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-13</time>
 </a>
 
@@ -545,7 +552,7 @@
     
     <h3 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h3><p>在使用git clone 命令从github上克隆项目时，显示错误：<br>fatal: unable to access ‘××’: OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054  </p>
     
-    <a class="article-more-a" href="/2021/09/13/git-err/#more">more >></a>
+    <a class="article-more-a" href="/2021/09/13/git-git-err/#more">more >></a>
     
     
 
@@ -583,7 +590,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2021/09/13/git-err/">展开全文 >></a>
+      <a class="article-more-a" href="/2021/09/13/git-git-err/">展开全文 >></a>
     </p>
     
 
@@ -613,7 +620,7 @@
 
 
   
-    <article id="post-mind-map1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-frontend-mind-map1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -621,7 +628,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/2021/04/21/mind-map1/" target="_blank">前端面经导图</a>
+	  <a class="article-title" href="/2021/04/21/frontend-mind-map1/" target="_blank">前端面经导图</a>
   
     </h1>
   
@@ -629,7 +636,7 @@
 
   
   
-<a href="/2021/04/21/mind-map1/" class="archive-article-date">
+<a href="/2021/04/21/frontend-mind-map1/" class="archive-article-date">
         <time datetime="2021-04-21T05:52:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-21</time>
 </a>
 
@@ -644,7 +651,7 @@
     
     <div align="center"><img src="http://ww1.sinaimg.cn/large/006HZNugly1gprblyj4tbj30t10imzlg.jpg" width="60%"/></div>
     
-    <a class="article-more-a" href="/2021/04/21/mind-map1/#more">more >></a>
+    <a class="article-more-a" href="/2021/04/21/frontend-mind-map1/#more">more >></a>
     
     
 
@@ -682,7 +689,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2021/04/21/mind-map1/">展开全文 >></a>
+      <a class="article-more-a" href="/2021/04/21/frontend-mind-map1/">展开全文 >></a>
     </p>
     
 
@@ -712,7 +719,7 @@
 
 
   
-    <article id="post-conda-vtr-env" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-ML-env-deploy-conda-vtr-env" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -720,7 +727,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/2021/04/18/conda-vtr-env/" target="_blank">anaconda配置python虚拟环境</a>
+	  <a class="article-title" href="/2021/04/18/ML-env-deploy-conda-vtr-env/" target="_blank">anaconda配置python虚拟环境</a>
   
     </h1>
   
@@ -728,7 +735,7 @@
 
   
   
-<a href="/2021/04/18/conda-vtr-env/" class="archive-article-date">
+<a href="/2021/04/18/ML-env-deploy-conda-vtr-env/" class="archive-article-date">
         <time datetime="2021-04-18T02:11:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-18</time>
 </a>
 
@@ -743,7 +750,7 @@
     
     <p>我现在的python版本是3.8，假如我需要安装旧版本的python，比如python 3.5，那么可以通过anaconda很轻松的配置环境，相当于在当前的这一台电脑上可以拥有很多个不同的python环境，那么在不同的工程中切换就会很方便。  </p>
     
-    <a class="article-more-a" href="/2021/04/18/conda-vtr-env/#more">more >></a>
+    <a class="article-more-a" href="/2021/04/18/ML-env-deploy-conda-vtr-env/#more">more >></a>
     
     
 
@@ -785,7 +792,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2021/04/18/conda-vtr-env/">展开全文 >></a>
+      <a class="article-more-a" href="/2021/04/18/ML-env-deploy-conda-vtr-env/">展开全文 >></a>
     </p>
     
 
@@ -815,7 +822,7 @@
 
 
   
-    <article id="post-Zijie-Yimian" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-interview-Zijie-Yimian" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -823,7 +830,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/2021/03/16/Zijie-Yimian/" target="_blank">记录字节一面</a>
+	  <a class="article-title" href="/2021/03/16/interview-Zijie-Yimian/" target="_blank">记录字节一面</a>
   
     </h1>
   
@@ -831,7 +838,7 @@
 
   
   
-<a href="/2021/03/16/Zijie-Yimian/" class="archive-article-date">
+<a href="/2021/03/16/interview-Zijie-Yimian/" class="archive-article-date">
         <time datetime="2021-03-16T08:52:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-16</time>
 </a>
 
@@ -846,7 +853,7 @@
     
     <p>今天3月16，下午进行了字节的前端实习生一面，时长70分钟，运气好碰到了同济的老学长，很亲切，面试体验良好。不过忘记录屏了，趁着现在还能记起来点，赶紧记录一下，能记录多少就记录多少吧~<br>寒假快结尾的时候抱着尝试一下的态度投了字节的实习生岗位，约好了在今天面试。我想好好锻炼下自己，如果梦想成真的话，下半年就会很充实，想想就很快乐呢~<br>然而必须认识的一个现实是我真的好菜，比起很多大佬来说毫无卖点。这两周在众多课程的间隙，我得复习大量的前端后端、计算机基础、操作系统、算法知识（看到很多面经里说前端不止问前端。。。），参考大量的面经，以及刷各种类型的题。怪我之前欠的账太多了，现在只能踉踉跄跄。</p>
     
-    <a class="article-more-a" href="/2021/03/16/Zijie-Yimian/#more">more >></a>
+    <a class="article-more-a" href="/2021/03/16/interview-Zijie-Yimian/#more">more >></a>
     
     
 
@@ -884,7 +891,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2021/03/16/Zijie-Yimian/">展开全文 >></a>
+      <a class="article-more-a" href="/2021/03/16/interview-Zijie-Yimian/">展开全文 >></a>
     </p>
     
 
@@ -914,7 +921,7 @@
 
 
   
-    <article id="post-front-end-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-algorithm-datastructure-algrithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -922,7 +929,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/2021/03/13/front-end-1/" target="_blank">捡拾前端知识点1</a>
+	  <a class="article-title" href="/2021/03/14/algorithm-datastructure-algrithm/" target="_blank">数据结构和算法面试常考题</a>
   
     </h1>
   
@@ -930,8 +937,8 @@
 
   
   
-<a href="/2021/03/13/front-end-1/" class="archive-article-date">
-        <time datetime="2021-03-13T07:39:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-13</time>
+<a href="/2021/03/14/algorithm-datastructure-algrithm/" class="archive-article-date">
+        <time datetime="2021-03-14T05:39:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-14</time>
 </a>
 
   
@@ -943,216 +950,9 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <ul>
-<li><p>html 标签的一些共有的属性有哪些?  </p>
-<blockquote>
-<p>class|id|style|title|dir|lang<br>html5新增: draggable|dragzone|hidden|spellcheck<br><a href="https://www.jianshu.com/p/31d2eda9f9cf" target="_blank" rel="noopener">参考链接</a>  </p>
-</blockquote>
+    <h2 id="1、请说一说你理解的Stack-Overflow，并举个简单例子导致栈溢出。"><a href="#1、请说一说你理解的Stack-Overflow，并举个简单例子导致栈溢出。" class="headerlink" title="1、请说一说你理解的Stack Overflow，并举个简单例子导致栈溢出。"></a>1、请说一说你理解的Stack Overflow，并举个简单例子导致栈溢出。</h2><p><strong>栈溢出概念：</strong><br>栈溢出指的是程序向栈中某个变量中写入的字节数超过了这个变量本身申请的字节数，因而导致栈中与其相邻的变量的值被改变。<br><strong>栈溢出的原因：</strong><br>1、局部数组过大。当函数内部的数组过大时，有可能导致堆栈溢出。局部变量是存储在栈当中的。解决这个问题的办法有两个，一是增大栈空间，二是改用动态分配，使用堆而不是栈。<br>2、递归调用次数太多。递归函数在运行时会进行压栈操作，当压栈次数太多时，也会导致堆栈溢出。<br>3、指针或数组越界。这种情况最常见，例如进行字符串拷贝，或处理用户输入等。  </p>
     
-    <a class="article-more-a" href="/2021/03/13/front-end-1/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/笔记//" class="article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/03/13/front-end-1/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-web-collect" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/03/13/web-collect/" target="_blank">web 前端 | html篇</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/03/13/web-collect/" class="archive-article-date">
-        <time datetime="2021-03-13T04:12:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-13</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="原文地址"><a href="#原文地址" class="headerlink" title="原文地址"></a>原文地址</h2><p>首先这份合集源于网络， <a href="https://segmentfault.com/a/1190000021966814" target="_blank" rel="noopener">原文地址</a> ，此处只是做记笔记的作用  </p>
-<h2 id="页面导入样式时，使用-link-和-import-有什么区别。"><a href="#页面导入样式时，使用-link-和-import-有什么区别。" class="headerlink" title="页面导入样式时，使用 link 和 @import 有什么区别。"></a>页面导入样式时，使用 link 和 @import 有什么区别。</h2><p>1、从属关系区别。@import 只能导入样式表，link 还可以定义 RSS、rel 连接属性、引入网站图标等；<br>2、加载顺序区别；加载页面时，link 标签引入的 CSS 被同时加载；@import 引入的 CSS 将在页面加载完毕后被加载；<br>3、兼容性区别；  </p>
-    
-    <a class="article-more-a" href="/2021/03/13/web-collect/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/笔记//" class="article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/03/13/web-collect/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-nowcoder-sort" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/03/12/nowcoder-sort/" target="_blank">已经不会了的排序orz</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/03/12/nowcoder-sort/" class="archive-article-date">
-        <time datetime="2021-03-12T08:12:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-12</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><ul>
-<li>时间复杂度O(logn)。空间复杂度是O(n)。</li>
-<li>主要是要找出标杆值（中间值），默认最后一个值为标杆值，然后比它小的放左边，比他大的放右边，然后交换最后一位。就得到标杆值在中间的下标。</li>
-<li>树，从上往下排序</li>
-<li>不稳定算法
-    
-    <a class="article-more-a" href="/2021/03/12/nowcoder-sort/#more">more >></a>
+    <a class="article-more-a" href="/2021/03/14/algorithm-datastructure-algrithm/#more">more >></a>
     
     
 
@@ -1194,7 +994,210 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2021/03/12/nowcoder-sort/">展开全文 >></a>
+      <a class="article-more-a" href="/2021/03/14/algorithm-datastructure-algrithm/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-frontend-front-end-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/03/13/frontend-front-end-1/" target="_blank">捡拾前端知识点1</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/03/13/frontend-front-end-1/" class="archive-article-date">
+        <time datetime="2021-03-13T07:39:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-13</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <ul>
+<li><p>html 标签的一些共有的属性有哪些?  </p>
+<blockquote>
+<p>class|id|style|title|dir|lang<br>html5新增: draggable|dragzone|hidden|spellcheck<br><a href="https://www.jianshu.com/p/31d2eda9f9cf" target="_blank" rel="noopener">参考链接</a>  </p>
+</blockquote>
+    
+    <a class="article-more-a" href="/2021/03/13/frontend-front-end-1/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/笔记//" class="article-tag-list-link color3">笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/03/13/frontend-front-end-1/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-frontend-web-collect" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/03/13/frontend-web-collect/" target="_blank">web 前端 | html篇</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/03/13/frontend-web-collect/" class="archive-article-date">
+        <time datetime="2021-03-13T04:12:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-13</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="原文地址"><a href="#原文地址" class="headerlink" title="原文地址"></a>原文地址</h2><p>首先这份合集源于网络， <a href="https://segmentfault.com/a/1190000021966814" target="_blank" rel="noopener">原文地址</a> ，此处只是做记笔记的作用  </p>
+<h2 id="页面导入样式时，使用-link-和-import-有什么区别。"><a href="#页面导入样式时，使用-link-和-import-有什么区别。" class="headerlink" title="页面导入样式时，使用 link 和 @import 有什么区别。"></a>页面导入样式时，使用 link 和 @import 有什么区别。</h2><p>1、从属关系区别。@import 只能导入样式表，link 还可以定义 RSS、rel 连接属性、引入网站图标等；<br>2、加载顺序区别；加载页面时，link 标签引入的 CSS 被同时加载；@import 引入的 CSS 将在页面加载完毕后被加载；<br>3、兼容性区别；  </p>
+    
+    <a class="article-more-a" href="/2021/03/13/frontend-web-collect/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/笔记//" class="article-tag-list-link color3">笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/03/13/frontend-web-collect/">展开全文 >></a>
     </p>
     
 
@@ -1226,7 +1229,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -1357,7 +1360,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1365,35 +1368,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">服务端</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">踩坑日常</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">好图</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1409,11 +1388,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">心得</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">服务端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PHP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">踩坑日常</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c++</a>
               </li>
             
             <div class="clearfix"></div>
