@@ -75,9 +75,7 @@
 			
 				<li><a href="/" target="_blank">主页</a></li>
 			
-				<li><a href="/tags/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/" target="_blank">技术笔记</a></li>
-			
-				<li><a href="/tags/%E9%9A%8F%E7%AC%94/" target="_blank">随笔</a></li>
+				<li><a href="/categories/%E7%AC%94%E8%AE%B0/" target="_blank">技术笔记</a></li>
 			
 			</ul>
 		</nav>
@@ -85,10 +83,6 @@
 			
 				
 					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
-				
-			
-				
-					<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
 				
 			
 				
@@ -116,11 +110,11 @@
 			
 			                                                     
 			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=2&id=28442976&auto=0&height=66"></iframe>
+				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=2&id=1334445174&auto=0&height=66"></iframe>
 			</div>
 			
 				
-				<p style="font-size: 12px;">来点音乐吧！<p>
+				<p style="font-size: 12px;">来首音乐吧！<p>
 			
 		
 		</nav>
@@ -159,8 +153,6 @@
 			
 				
 			
-				
-			
 			
 			
 			<nav class="header-nav">
@@ -180,14 +172,12 @@
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 70%">
+				<ul style="width: 50%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 50%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/tags/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a></li>
-		        
-					<li style="width: 33.333333333333336%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+					<li style="width: 50%"><a href="/categories/%E7%AC%94%E8%AE%B0/">技术笔记</a></li>
 		        
 				</ul>
 			</nav>
@@ -237,33 +227,9 @@
     
     <h1 id="perf"><a href="#perf" class="headerlink" title="perf"></a>perf</h1><p>Linux平台专属，以下内容基于CentOS<br>快速找出性能瓶颈和优化点</p>
 <h2 id="1-安装perf"><a href="#1-安装perf" class="headerlink" title="1. 安装perf"></a>1. 安装perf</h2><h3 id="Ubuntu系统"><a href="#Ubuntu系统" class="headerlink" title="Ubuntu系统"></a>Ubuntu系统</h3><p>sudo apt-get install linux-tools-common linux-tools-generic linux-tools-<code>uname -r</code></p>
-<h3 id="Centos系统"><a href="#Centos系统" class="headerlink" title="Centos系统"></a>Centos系统</h3><p>yum install -y perf</p>
-<h2 id="2-查看perf版本"><a href="#2-查看perf版本" class="headerlink" title="2. 查看perf版本"></a>2. 查看perf版本</h2><p>$ perf –version<br>perf version 5.4.44</p>
-<h2 id="3-测试代码"><a href="#3-测试代码" class="headerlink" title="3. 测试代码"></a>3. 测试代码</h2><p>#include &lt;stdio.h&gt;<br>#include &lt;stdlib.h&gt;</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">long_test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">1000000</span>; i++) j = i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) long_test();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) long_test();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    foo1();</span><br><span class="line">    foo2();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>编译成二进制文件<br><code>g++ -o test test.cpp</code><h2 id="4-使用perf对系统-CPU-事件做采样"><a href="#4-使用perf对系统-CPU-事件做采样" class="headerlink" title="4. 使用perf对系统 CPU 事件做采样"></a>4. 使用perf对系统 CPU 事件做采样</h2>采样60s，会生成一个perf.data文件<h3 id="方式一：对一个正在运行的进程，进行采样"><a href="#方式一：对一个正在运行的进程，进行采样" class="headerlink" title="方式一：对一个正在运行的进程，进行采样"></a>方式一：对一个正在运行的进程，进行采样</h3><code>perf record -p PID -g -- sleep 60</code></li>
-</ul>
-<h3 id="方式二：全新运行一个二进制文件main，进行采样"><a href="#方式二：全新运行一个二进制文件main，进行采样" class="headerlink" title="方式二：全新运行一个二进制文件main，进行采样"></a>方式二：全新运行一个二进制文件main，进行采样</h3><p><code>sudo perf record -F 99 -g ./main -- sleep 60</code></p>
-<h2 id="5-生成火焰图"><a href="#5-生成火焰图" class="headerlink" title="5. 生成火焰图"></a>5. 生成火焰图</h2><p>利用这个开源工具可以将报告生成可视化的svg图片，更容易查看对应的CPU开销时间和调用栈深度。<br>git clone –depth 1 <a href="https://github.com/brendangregg/FlameGraph.git" target="_blank" rel="noopener">https://github.com/brendangregg/FlameGraph.git</a></p>
-<h3 id="安装perl"><a href="#安装perl" class="headerlink" title="安装perl"></a>安装perl</h3><p><code>yum install -y perl</code></p>
-<h4 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h4><p><code>apt install  -y perl</code><br>生成火焰图的脚本<br>对二进制文件main进行10秒的采样，然后生成火焰图<br>非root用户需要加sudo</p>
-<blockquote>
-<p>perf record -g ./main  sleep 10<br>perf script -i perf.data &amp;&gt; perf.unfold<br>./FlameGraph/stackcollapse-perf.pl perf.unfold &amp;&gt; perf.folded<br>./FlameGraph/flamegraph.pl perf.folded &gt; perf.svg</p>
-</blockquote>
-<h2 id="6-将火焰图从docker中导出到本地"><a href="#6-将火焰图从docker中导出到本地" class="headerlink" title="6. 将火焰图从docker中导出到本地"></a>6. 将火焰图从docker中导出到本地</h2><p>docker cp 3cf72755eea5:/home/tmp/perf.svg /Users/lihui/Desktop</p>
-<h2 id="7-参考博客"><a href="#7-参考博客" class="headerlink" title="7. 参考博客"></a>7. 参考博客</h2><ul>
-<li>perf的基本使用方法</li>
-<li>博客</li>
-<li>阮一峰-如何读懂火焰图？<h2 id="8-从火焰图可以获得的信息"><a href="#8-从火焰图可以获得的信息" class="headerlink" title="8. 从火焰图可以获得的信息"></a>8. 从火焰图可以获得的信息</h2></li>
-<li>调用栈从下往上，下层为父类，上层为子类。</li>
-<li>点击父类缩小，点击子类放大。</li>
-<li>只关注自己实现的函数名，忽略标准库中的函数。</li>
-<li>总结一下，火焰图的宽度用于比较不同函数或代码路径的性能，而高度用于显示函数调用堆栈的深度。<h2 id="9-生成火焰图常见问题"><a href="#9-生成火焰图常见问题" class="headerlink" title="9. 生成火焰图常见问题"></a>9. 生成火焰图常见问题</h2></li>
-<li>没有加root权限</li>
-</ul>
-
+    
+    <a class="article-more-a" href="/2024/07/28/backend-cpp-perf-analyse/#more">more >></a>
+    
     
 
     
@@ -1241,7 +1207,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018-2024 <a href="https://lihui91.github.io/" target="_blank">‘Lihui’</a>
+    		&copy; 2020-2024 <a href="https://lihui91.github.io/" target="_blank">‘Lihui’</a>
     	</div>
       	<div class="footer-right">
 			
@@ -1321,25 +1287,17 @@
       
       
     
-      
-      
-      
-    
     
 
     <ul style="width: 70%">
     
     
       
-      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
       
         
       
-      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
-      
-        
-      
-      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
       
         
     </ul>
@@ -1360,11 +1318,23 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面经</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面经</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1376,23 +1346,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">matlab</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1404,15 +1366,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">踩坑日常</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">c++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">踩坑日常</a>
               </li>
             
             <div class="clearfix"></div>
@@ -1459,70 +1417,12 @@
     
 
     
-    	<section class="tools-section tools-section-friends" q-show="friends">
-  		
-        <ul class="search-ul">
-          
-            <li class="search-li">
-              <a href="https://zhousiwei.gitee.io/ibooks/" target="_blank" 
-                class="search-title" title="记录工作和学习过程中的笔记：Java、前端开发、Hexo博客、聚合支付、Linux笔记、ElasticSearch、ELK日志分析">
-                
-                  <img src="https://zhousiwei.gitee.io/ibooks/favicon.ico">
-                
-                技术笔记
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://github.com/JoeyBling" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                GitHub
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://gitee.com/zhousiwei" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                码云
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://www.jianshu.com/u/02cbf31a043a" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                简书
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://blog.csdn.net/qq_30930805" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                CSDN
-              </a>
-            </li>
-          
-        </ul>
-  		
-    	</section>
-    
 
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
         
           
-  	  		<div class="aboutme-wrap" id="aboutme">计算机渣渣<br><br>爱运动健身<br><br>永远18岁</div>
+  	  		<div class="aboutme-wrap" id="aboutme">I go through the world and record what I have learned.</div>
   	  	
     	</section>
     
